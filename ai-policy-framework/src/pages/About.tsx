@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Shield, Lock, Scale, Users, Factory, Info } from "lucide-react";
+import { Shield, Lock, Scale, Users, Factory, Info, AlertTriangle } from "lucide-react";
 import { POLICY_ATTRIBUTES } from "@/types/policy";
 
 const iconMap = {
@@ -23,6 +23,28 @@ const About = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-8">
+        <div className="mb-8 animate-fade-in">
+          <Card className="border-2 border-amber-200 bg-amber-50/50 dark:border-amber-900 dark:bg-amber-950/20">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-500" />
+                <CardTitle className="text-amber-800 dark:text-amber-400">Disclaimer</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <p className="text-muted-foreground leading-relaxed">
+                The scores and analyses presented in this tool are intended for informational and
+                research purposes only. They should not be interpreted as policy recommendations,
+                endorsements, or evaluations of the merits of any particular governance approach.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                The framework's contribution lies in demonstrating that systematic, multidimensional
+                policy analysis can be both scalable and transparent.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
         <Alert className="mb-8 animate-fade-in border-2">
           <Info className="h-4 w-4" />
           <AlertDescription>
