@@ -1,18 +1,22 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { policies } from "@/data/policies";
 import { policyExcerpts } from "@/data/policyExcerpts";
+import { getBenchmarkForPolicy, MODEL_COLORS } from "@/data/llmBenchmarks";
 import { PolicyRadarChart } from "@/components/PolicyRadarChart";
 import { CategoryRadarChart } from "@/components/CategoryRadarChart";
 import { PolicyCard } from "@/components/PolicyCard";
 import { Shield, Lock, Scale, Users, Factory, ArrowLeft, CheckCircle2, FileText, Quote, Expand } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { POLICY_ATTRIBUTES } from "@/types/policy";
 import { categoryCriteria } from "@/data/categoryCriteria";
 import { criterionScores } from "@/data/criterionScores";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import type { LLMBenchmarkEntry, BillBenchmark } from "@/data/llmBenchmarks";
 
 const iconMap = {
   "National Security": Shield,
@@ -52,6 +56,165 @@ const getCategoryRadarData = (policyId: string, category: string) => {
     fullMark: 100,
   }));
 };
+
+const BENCH_DIMENSIONS = [
+  "Antitrust",
+  "Industrial Policy",
+  "National Security",
+  "Civil & Human Rights",
+  "Safety & Security",
+] as const;
+
+function BenchModelRadar({ entry, color }: { entry: LLMBenchmarkEntry; color: string }) {
+  const data = BENCH_DIMENSIONS.map((dim) => ({
+    subject: dim,
+    value: entry.scores[dim],
+    fullMark: 100,
+  }));
+
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <RadarChart cx="50%" cy="50%" outerRadius="65%" data={data}>
+        <PolarGrid stroke="hsl(var(--border))" strokeWidth={1} />
+        <PolarAngleAxis
+          dataKey="subject"
+          tick={{ fill: 'hsl(var(--foreground))', fontSize: 10, fontWeight: 500 }}
+          tickLine={false}
+        />
+        <PolarRadiusAxis
+          angle={90}
+          domain={[0, 100]}
+          tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }}
+          axisLine={false}
+          tickCount={5}
+        />
+        <Tooltip
+          content={({ active, payload }) => {
+            if (active && payload && payload.length) {
+              const d = payload[0].payload;
+              return (
+                <div className="bg-popover border rounded-lg p-3 shadow-lg">
+                  <p className="font-medium text-sm text-foreground">{d.subject}</p>
+                  <p className="text-sm text-muted-foreground">Score: {d.value}</p>
+                </div>
+              );
+            }
+            return null;
+          }}
+        />
+        <Radar
+          name={entry.model}
+          dataKey="value"
+          stroke={color}
+          fill={color}
+          fillOpacity={0.3}
+          strokeWidth={2}
+        />
+      </RadarChart>
+    </ResponsiveContainer>
+  );
+}
+
+function BenchOverlayChart({ bill }: { bill: BillBenchmark }) {
+  const mergedData = BENCH_DIMENSIONS.map((dim) => {
+    const point: Record<string, string | number> = { subject: dim, fullMark: 100 };
+    bill.models.forEach((m) => {
+      point[m.model] = m.scores[dim];
+    });
+    return point;
+  });
+
+  return (
+    <ResponsiveContainer width="100%" height={450}>
+      <RadarChart cx="50%" cy="50%" outerRadius="65%" data={mergedData}>
+        <PolarGrid stroke="hsl(var(--border))" strokeWidth={1.5} />
+        <PolarAngleAxis
+          dataKey="subject"
+          tick={{ fill: 'hsl(var(--foreground))', fontSize: 12, fontWeight: 600 }}
+          tickLine={false}
+          dy={-10}
+        />
+        <PolarRadiusAxis
+          angle={90}
+          domain={[0, 100]}
+          tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 11 }}
+          axisLine={false}
+        />
+        {bill.models.map((m) => (
+          <Radar
+            key={m.model}
+            name={m.model}
+            dataKey={m.model}
+            stroke={MODEL_COLORS[m.model]}
+            fill={MODEL_COLORS[m.model]}
+            fillOpacity={0.08}
+            strokeWidth={2}
+          />
+        ))}
+        <Legend
+          wrapperStyle={{ paddingTop: '20px', fontSize: '12px' }}
+          iconType="circle"
+        />
+      </RadarChart>
+    </ResponsiveContainer>
+  );
+}
+
+function BenchmarkSection({ policyId }: { policyId: string }) {
+  const benchmark = getBenchmarkForPolicy(policyId);
+  if (!benchmark) return null;
+
+  return (
+    <div className="mb-12 animate-fade-in" style={{ animationDelay: "0.7s" }}>
+      <h2 className="text-3xl font-bold mb-2 pb-1">LLM Benchmark Results</h2>
+      <p className="text-muted-foreground mb-6">
+        How different LLMs scored this bill across the five framework dimensions.
+      </p>
+
+      <Card className="border-2 shadow-lg mb-8">
+        <CardHeader>
+          <CardTitle>All Models Overlay</CardTitle>
+          <CardDescription>
+            Comparison of all LLM benchmark scores on this bill
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <BenchOverlayChart bill={benchmark} />
+        </CardContent>
+      </Card>
+
+      <h3 className="text-2xl font-bold mb-4">Individual Model Results</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {benchmark.models.map((entry) => {
+          const color = MODEL_COLORS[entry.model];
+          const avg = Object.values(entry.scores).reduce((a, b) => a + b, 0) / 5;
+          return (
+            <Card key={entry.model} className="border-2 hover:shadow-lg transition-shadow">
+              <CardHeader className="pb-2">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
+                  <CardTitle className="text-base">{entry.model}</CardTitle>
+                </div>
+                <CardDescription>Avg: {avg.toFixed(1)} / 100</CardDescription>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <BenchModelRadar entry={entry} color={color} />
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 text-xs text-muted-foreground">
+                  {BENCH_DIMENSIONS.map((dim) => (
+                    <div key={dim} className="flex justify-between">
+                      <span className="truncate mr-2">{dim}</span>
+                      <span className="font-mono font-medium text-foreground">{entry.scores[dim]}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 const PolicyDetail = () => {
   const { id } = useParams();
@@ -275,6 +438,8 @@ const PolicyDetail = () => {
             })}
           </div>
         </div>
+
+        <BenchmarkSection policyId={policy.id} />
 
         <div className="mb-8 animate-fade-in" style={{ animationDelay: "1.0s" }}>
           <h2 className="text-3xl font-bold mb-6 pb-1">Scoring Criteria & Weightings</h2>

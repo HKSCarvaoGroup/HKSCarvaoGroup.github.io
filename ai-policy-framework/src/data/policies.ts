@@ -98,6 +98,36 @@ export const policies: Policy[] = [
     ]
   },
   {
+    id: "eu-dma-2025",
+    name: "EU Digital Markets Act (2025)",
+    description: "Regulation ensuring contestable and fair digital markets by constraining gatekeeper platforms",
+    summary: "The EU Digital Markets Act establishes a regulatory framework targeting large online platforms designated as 'gatekeepers' to ensure contestability and fairness in digital markets. It imposes obligations on gatekeepers to allow interoperability, prevent self-preferencing, ensure data portability, and prohibit anti-competitive bundling. The DMA empowers the European Commission to enforce compliance through significant penalties and structural remedies.",
+    year: 2025,
+    color: "hsl(45, 85%, 50%)",
+    data: [
+      { subject: 'National Security', value: 43, fullMark: 100 },
+      { subject: 'Safety & Security', value: 44, fullMark: 100 },
+      { subject: 'Antitrust', value: 50, fullMark: 100 },
+      { subject: 'Civil & Human Rights', value: 46, fullMark: 100 },
+      { subject: 'Industrial Policy', value: 39, fullMark: 100 },
+    ]
+  },
+  {
+    id: "ndaa-2026",
+    name: "2026 NDAA: Subtitle D \u2013 Artificial Intelligence",
+    description: "Defense authorization provisions governing military and national security AI applications",
+    summary: "Subtitle D of the 2026 National Defense Authorization Act addresses artificial intelligence within the Department of Defense and broader national security apparatus. It establishes requirements for AI testing and evaluation, responsible AI deployment in military contexts, workforce development for AI-skilled personnel, and interagency coordination on AI standards. The legislation also mandates reporting on adversary AI capabilities and directs investment in AI research infrastructure.",
+    year: 2026,
+    color: "hsl(0, 70%, 50%)",
+    data: [
+      { subject: 'National Security', value: 60, fullMark: 100 },
+      { subject: 'Safety & Security', value: 53, fullMark: 100 },
+      { subject: 'Antitrust', value: 49, fullMark: 100 },
+      { subject: 'Civil & Human Rights', value: 50, fullMark: 100 },
+      { subject: 'Industrial Policy', value: 56, fullMark: 100 },
+    ]
+  },
+  {
     id: "uk-digital-markets-act",
     name: "UK Digital Markets, Competition and Consumers Act 2024",
     description: "Competition regulation framework targeting strategic market power in digital markets",

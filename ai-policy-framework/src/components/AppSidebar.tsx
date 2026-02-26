@@ -1,4 +1,4 @@
-import { FileText, BarChart3, Shield, Info } from "lucide-react";
+import { FileText, BarChart3, Shield, Info, FlaskConical } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import {
   Sidebar,
@@ -16,6 +16,7 @@ import { policies } from "@/data/policies";
 const navItems = [
   { title: "Overview", url: "/", icon: BarChart3 },
   { title: "Compare", url: "/compare", icon: FileText },
+  { title: "LLM Benchmarks", url: "/benchmarks", icon: FlaskConical },
   { title: "About", url: "/about", icon: Info },
 ];
 
