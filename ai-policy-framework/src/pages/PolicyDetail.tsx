@@ -248,8 +248,11 @@ const PolicyDetail = () => {
         <div className="mb-8 animate-fade-in">
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
-              <div className="flex items-center gap-4 mb-3">
+              <div className="flex items-center gap-4 mb-3 flex-wrap">
                 <h1 className="text-4xl font-bold">{policy.name}</h1>
+                <Badge variant="outline" className="text-sm px-3 py-1">
+                  {policy.area}
+                </Badge>
                 <Badge variant="secondary" className="text-lg px-4 py-2">
                   {policy.year}
                 </Badge>

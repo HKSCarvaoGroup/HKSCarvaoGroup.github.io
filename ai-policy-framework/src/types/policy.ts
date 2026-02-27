@@ -10,6 +10,7 @@ export interface Policy {
   description: string;
   summary: string;
   year: number;
+  area: string;
   data: PolicyData[];
   color: string;
   pdfUrl?: string;

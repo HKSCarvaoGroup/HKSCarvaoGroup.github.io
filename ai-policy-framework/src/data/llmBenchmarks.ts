@@ -39,7 +39,8 @@ export const MODEL_COLORS: Record<string, string> = {
 
 // Maps policy IDs (from policies.ts) to their benchmark IDs
 export const policyToBenchmarkId: Record<string, string> = {
-  "california-sb53": "california-sb53-bench",
+  "california-2025-sb53-safety-security": "california-sb53-bench",
+  "california-2025-sb53-industrial-policy": "california-sb53-bench",
   "colorado-ai-act": "colorado-ai-act-bench",
   "eo-ai-exports": "eo-14320",
   "eu-dma-2025": "eu-dma-2025",

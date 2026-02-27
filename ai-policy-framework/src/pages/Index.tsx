@@ -5,22 +5,40 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight, TrendingUp, Search, X } from "lucide-react";
+
+const AREA_OPTIONS = [
+  "All Areas",
+  "Safety & Security",
+  "National Security",
+  "Antitrust",
+  "Civil & Human Rights",
+  "Industrial Policy",
+];
 
 const Index = () => {
   const [search, setSearch] = useState("");
+  const [areaFilter, setAreaFilter] = useState("All Areas");
 
   const filteredPolicies = useMemo(() => {
-    if (!search.trim()) return policies;
-    const q = search.toLowerCase();
-    return policies.filter(
-      (p) =>
-        p.name.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q) ||
-        p.summary.toLowerCase().includes(q) ||
-        String(p.year).includes(q)
-    );
-  }, [search]);
+    let result = policies;
+    if (areaFilter !== "All Areas") {
+      result = result.filter((p) => p.area === areaFilter);
+    }
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q) ||
+          p.summary.toLowerCase().includes(q) ||
+          p.area.toLowerCase().includes(q) ||
+          String(p.year).includes(q)
+      );
+    }
+    return result;
+  }, [search, areaFilter]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
@@ -57,25 +75,37 @@ const Index = () => {
         <div className="mb-12">
           <h2 className="text-3xl font-bold mb-4 text-center pb-1">Explore Policies</h2>
 
-          <div className="max-w-md mx-auto mb-8">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search by name, topic, or year..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-9 pr-9 h-11"
-              />
-              {search && (
-                <button
-                  onClick={() => setSearch("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              )}
+          <div className="max-w-2xl mx-auto mb-8">
+            <div className="flex gap-3">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search by name, topic, or year..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="pl-9 pr-9 h-11"
+                />
+                {search && (
+                  <button
+                    onClick={() => setSearch("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
+              <Select value={areaFilter} onValueChange={setAreaFilter}>
+                <SelectTrigger className="w-[200px] h-11">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {AREA_OPTIONS.map((area) => (
+                    <SelectItem key={area} value={area}>{area}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            {search && (
+            {(search || areaFilter !== "All Areas") && (
               <p className="text-sm text-muted-foreground mt-2 text-center">
                 {filteredPolicies.length} {filteredPolicies.length === 1 ? "policy" : "policies"} found
               </p>
@@ -93,13 +123,10 @@ const Index = () => {
                 <Card className="border-2 h-full hover:shadow-xl transition-all hover:scale-[1.02] hover:border-primary/50">
                   <CardHeader>
                     <div className="flex items-start justify-between mb-3">
-                      <div
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: policy.color }}
-                      />
+                      <Badge variant="outline" className="text-xs">{policy.area}</Badge>
                       <Badge variant="secondary">{policy.year}</Badge>
                     </div>
-                    <CardTitle className="group-hover:text-primary transition-colors">
+                    <CardTitle className="group-hover:text-primary transition-colors text-base">
                       {policy.name}
                     </CardTitle>
                   </CardHeader>

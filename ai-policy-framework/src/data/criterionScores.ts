@@ -3,7 +3,7 @@
 // Formula: Overall Score = Sum(Criterion Score × Criterion Weight / 100)
 
 export const criterionScores: Record<string, Record<string, Record<string, number>>> = {
-  "california-sb53": {
+  "california-2025-sb53-safety-security": {
     "National Security": {
       "Defense & Military Applications": 40,
       "Critical Infrastructure Protection": 70,
@@ -87,49 +87,6 @@ export const criterionScores: Record<string, Record<string, Record<string, numbe
       "Infrastructure & Compute Capacity": 50,
       "Energy & Resource Capacity": 25,
       "Global Competitiveness": 40,
-    },
-  },
-  "eo-genesis-mission": {
-    "National Security": {
-      "Defense & Military Applications": 100,
-      "Critical Infrastructure Protection": 100,
-      "Export Controls & Tech Sovereignty": 95,
-      "Foreign Influence & Espionage": 90,
-      "Cyber Defense & Resilience": 95,
-      "Interagency & International Coordination": 90,
-    },
-    "Safety & Security": {
-      "Testing & Evaluation Requirements": 80,
-      "Incident Reporting & Transparency": 70,
-      "Cybersecurity Provisions": 80,
-      "Human Oversight & Accountability": 75,
-      "Whistleblower Protections": 60,
-      "Third-Party Audits & Compliance": 70,
-      "Physical & Individual Safety Protections": 75,
-    },
-    "Antitrust": {
-      "Market Concentration & Dominance": 30,
-      "Merger & Acquisition Scrutiny": 35,
-      "Competition Enforcement Capacity": 35,
-      "Interoperability & Open Standards": 35,
-      "Data Access & Mandatory Sharing": 40,
-      "Exclusionary Conduct & Platform Neutrality": 30,
-    },
-    "Civil & Human Rights": {
-      "Consumer Protection": 50,
-      "Privacy & Data Rights": 55,
-      "Bias & Fairness": 60,
-      "Accessibility & Inclusion": 55,
-      "Legal Protections & Due Process": 55,
-      "Transparency & Explainability": 50,
-    },
-    "Industrial Policy": {
-      "Workforce Development & Job Quality": 85,
-      "R&D, Investment & Incentives": 100,
-      "Domestic Manufacturing & Supply Chains": 90,
-      "Infrastructure & Compute Capacity": 95,
-      "Energy & Resource Capacity": 85,
-      "Global Competitiveness": 90,
     },
   },
   "eo-ai-education": {
@@ -216,49 +173,6 @@ export const criterionScores: Record<string, Record<string, Record<string, numbe
       "Infrastructure & Compute Capacity": 85,
       "Energy & Resource Capacity": 80,
       "Global Competitiveness": 95,
-    },
-  },
-  "eu-digital-services-act": {
-    "National Security": {
-      "Defense & Military Applications": 30,
-      "Critical Infrastructure Protection": 50,
-      "Export Controls & Tech Sovereignty": 40,
-      "Foreign Influence & Espionage": 55,
-      "Cyber Defense & Resilience": 50,
-      "Interagency & International Coordination": 45,
-    },
-    "Safety & Security": {
-      "Testing & Evaluation Requirements": 85,
-      "Incident Reporting & Transparency": 90,
-      "Cybersecurity Provisions": 80,
-      "Human Oversight & Accountability": 85,
-      "Whistleblower Protections": 80,
-      "Third-Party Audits & Compliance": 85,
-      "Physical & Individual Safety Protections": 80,
-    },
-    "Antitrust": {
-      "Market Concentration & Dominance": 70,
-      "Merger & Acquisition Scrutiny": 60,
-      "Competition Enforcement Capacity": 65,
-      "Interoperability & Open Standards": 65,
-      "Data Access & Mandatory Sharing": 60,
-      "Exclusionary Conduct & Platform Neutrality": 70,
-    },
-    "Civil & Human Rights": {
-      "Consumer Protection": 95,
-      "Privacy & Data Rights": 100,
-      "Bias & Fairness": 95,
-      "Accessibility & Inclusion": 90,
-      "Legal Protections & Due Process": 95,
-      "Transparency & Explainability": 100,
-    },
-    "Industrial Policy": {
-      "Workforce Development & Job Quality": 55,
-      "R&D, Investment & Incentives": 45,
-      "Domestic Manufacturing & Supply Chains": 40,
-      "Infrastructure & Compute Capacity": 55,
-      "Energy & Resource Capacity": 40,
-      "Global Competitiveness": 50,
     },
   },
   "uk-digital-markets-act": {

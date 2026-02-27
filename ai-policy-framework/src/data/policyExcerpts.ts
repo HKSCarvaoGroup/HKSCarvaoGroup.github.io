@@ -4,7 +4,7 @@ export interface PolicyExcerpt {
 }
 
 export const policyExcerpts: Record<string, PolicyExcerpt[]> = {
-  "california-sb53": [
+  "california-2025-sb53-safety-security": [
     {
       attribute: "National Security",
       excerpts: [
@@ -119,47 +119,6 @@ export const policyExcerpts: Record<string, PolicyExcerpt[]> = {
       ]
     }
   ],
-  "eo-genesis-mission": [
-    {
-      attribute: "National Security",
-      excerpts: [
-        "Genesis Mission is a dedicated national effort comparable in urgency and ambition to Manhattan Project that was instrumental to victory in World War II.",
-        "Will strengthen national security and secure energy dominance through AI-accelerated scientific discovery.",
-        "Establishes American Science and Security Platform integrating DOE national laboratories, federal scientific datasets, and national security sites.",
-        "Brings together Nation's research and development resources to achieve dramatic acceleration in AI development for strategic leadership."
-      ]
-    },
-    {
-      attribute: "Safety & Security",
-      excerpts: [
-        "Platform provides secure cloud-based AI computing environments capable of supporting large-scale model training and simulation.",
-        "Ensures all DOE resources used for Mission elements are integrated into secure, unified platform with appropriate security measures."
-      ]
-    },
-    {
-      attribute: "Antitrust",
-      excerpts: [
-        "Mission combines efforts of brilliant American scientists with pioneering American businesses and world-renowned universities.",
-        "Creates integrated platform providing broad access to computational resources and federal datasets for research community."
-      ]
-    },
-    {
-      attribute: "Civil & Human Rights",
-      excerpts: [
-        "Genesis Mission will harness Federal scientific datasets - world's largest collection developed over decades of Federal investments - for public benefit.",
-        "Will multiply return on taxpayer investment into research and development through AI-accelerated discovery."
-      ]
-    },
-    {
-      attribute: "Industrial Policy",
-      excerpts: [
-        "Secretary of Energy shall establish and operate the American Science and Security Platform to serve as infrastructure for the Mission.",
-        "Platform provides high-performance computing resources including DOE national laboratory supercomputers and secure cloud-based AI computing environments.",
-        "Builds on decades of innovation in semiconductors and high-performance computing to harness computing revolution for Nation's benefit.",
-        "Will dramatically accelerate scientific discovery and enhance workforce productivity."
-      ]
-    }
-  ],
   "eo-ai-exports": [
     {
       attribute: "National Security",
@@ -198,48 +157,6 @@ export const policyExcerpts: Record<string, PolicyExcerpt[]> = {
         "Mobilizes Federal financing tools including EXIM, DFC, and Trade and Development Agency to support American AI exports.",
         "Selected proposals designated as priority AI export packages receive priority access to Federal financing and diplomatic support.",
         "Secretary of Commerce to identify specific target countries or regional blocs for export engagement."
-      ]
-    }
-  ],
-  "eu-digital-services-act": [
-    {
-      attribute: "National Security",
-      excerpts: [
-        "Provisions address protection of critical infrastructure and coordination among Member States for security threats.",
-        "Addresses illegal content and disinformation that could pose national security risks."
-      ]
-    },
-    {
-      attribute: "Safety & Security",
-      excerpts: [
-        "Establishes tiered obligations for intermediary services and online platforms based on service type and size.",
-        "Creates harmonized rules requiring transparency, content moderation, and accountability mechanisms across digital services.",
-        "Mandates providers to implement measures to tackle illegal content and protect users from online harms.",
-        "Responsible and diligent behavior by providers of intermediary services is essential for safe, predictable and trustworthy online environment."
-      ]
-    },
-    {
-      attribute: "Antitrust",
-      excerpts: [
-        "Harmonizes conditions for provision of intermediary services across internal market to provide businesses access to new markets.",
-        "Addresses market concentration concerns by establishing rules that apply proportionally based on platform size and reach.",
-        "Prevents diverging national laws that negatively affect internal market and cross-border provision of services."
-      ]
-    },
-    {
-      attribute: "Civil & Human Rights",
-      excerpts: [
-        "Safeguards fundamental rights guaranteed in Charter of Fundamental Rights including freedom of expression and information, freedom to conduct business, right to non-discrimination.",
-        "Ensures high level of consumer protection through transparency requirements and user protection mechanisms.",
-        "Allows Union citizens and other persons to exercise their fundamental rights in digital environment.",
-        "Provisions designed to protect consumers and other recipients of services with increased choice."
-      ]
-    },
-    {
-      attribute: "Industrial Policy",
-      excerpts: [
-        "Creates harmonized framework across EU single market to enable businesses to scale and operate efficiently across borders.",
-        "Provides regulatory certainty for digital service providers operating in European market."
       ]
     }
   ],
