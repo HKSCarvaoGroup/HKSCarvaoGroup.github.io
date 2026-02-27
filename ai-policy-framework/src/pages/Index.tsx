@@ -1,11 +1,27 @@
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { policies } from "@/data/policies";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, TrendingUp } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, TrendingUp, Search, X } from "lucide-react";
 
 const Index = () => {
+  const [search, setSearch] = useState("");
+
+  const filteredPolicies = useMemo(() => {
+    if (!search.trim()) return policies;
+    const q = search.toLowerCase();
+    return policies.filter(
+      (p) =>
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.summary.toLowerCase().includes(q) ||
+        String(p.year).includes(q)
+    );
+  }, [search]);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
       <div className="container mx-auto px-6 py-12">
@@ -39,9 +55,35 @@ const Index = () => {
 
         {/* Policy Cards Grid */}
         <div className="mb-12">
-          <h2 className="text-3xl font-bold mb-8 text-center pb-1">Explore Policies</h2>
+          <h2 className="text-3xl font-bold mb-4 text-center pb-1">Explore Policies</h2>
+
+          <div className="max-w-md mx-auto mb-8">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search by name, topic, or year..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-9 pr-9 h-11"
+              />
+              {search && (
+                <button
+                  onClick={() => setSearch("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+            {search && (
+              <p className="text-sm text-muted-foreground mt-2 text-center">
+                {filteredPolicies.length} {filteredPolicies.length === 1 ? "policy" : "policies"} found
+              </p>
+            )}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {policies.map((policy, index) => (
+            {filteredPolicies.map((policy, index) => (
               <Link
                 key={policy.id}
                 to={`/policy/${policy.id}`}
@@ -73,6 +115,13 @@ const Index = () => {
                 </Card>
               </Link>
             ))}
+            {filteredPolicies.length === 0 && (
+              <div className="col-span-full text-center py-12 text-muted-foreground">
+                <Search className="h-10 w-10 mx-auto mb-3 opacity-40" />
+                <p className="text-lg font-medium">No policies found</p>
+                <p className="text-sm mt-1">Try a different search term</p>
+              </div>
+            )}
           </div>
         </div>
 
